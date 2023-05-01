@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Почетна страна";
+}
+<div id="bg-image" class="bg-image">
+    <div id="text" class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-dark text-light">
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+            <h1 class="display-4 fw-normal"><img src="~/lib/photoz/comcicfy_thumbnail.png" width="420" height="340" /></h1>
+            <p class="lead fw-normal text-center">НАЈДОБРОТО МЕСТО ЗА ПРОДАЖБА, ИЗНАЈМУВАЊЕ И КУПУВАЊЕ НА СТРИПОВИ.</p>
+            <br />
+            <a class="btn btn-outline-secondary text-light" asp-controller="ComicBooks" asp-action="Index">Достапни стрипови</a>
+        </div>
+    </div>
+    </div>
+
+    <br />
+
+    <div class="row align-items-md-stretch">
+        <div class="col-md-6">
+            <div id="info" class="h-100 p-5 text-dark bg-light border rounded-3">
+                <h2>Продажба</h2>
+                <p>Купете стрипови кои ви се допаѓаат.</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="info" class="h-100 p-5 text-dark bg-light border rounded-3">
+                <h2>Изнајмување</h2>
+                <p>Изнајмете стрипови кои сакате да ги прочитате.</p>
+            </div>
+        </div>
+    </div>
+<br />
+    <span style="padding-bottom:25px"></span>
+    <div class="row align-items-md-stretch">
+        <div class="col-md-8 offset-2">
+            <div id="info" class="h-100 p-5 text-dark bg-light border rounded-3">
+                <h2>Додадете ваши стрипови</h2>
+                <p>Или, поставете стрип кој го поседувате, на продажба или изнајмување.</p>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="col-md-8 offset-2 col text-center">
+            <h4 class="text-dark text-center">Стани и ти дел од C O M I C F Y !</h4>
+            <br />
+            <a class="btn btn-dark text-light my-2 my-sm-0" asp-controller="Account" asp-action="Register">
+                <i class="bi bi-person-plus"></i> Регистрирај се
+            </a>
+        </div>
+    }
+
+    <style>
+        #info {
+            background-color: #e3e3e3;
+        }
+/*
+        #bg-image {
+            height: 150px;
+            width: 150px;
+            background-image: url(https://i.pinimg.com/736x/e3/03/bc/e303bc28cb50675d4f471ea93a4f97c1.jpg);
+            background-size: cover;
+            filter: blur(30px);
+            transition: 100ms filter linear;
+        }
+
+        #text {
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0, 0.4);
+            color: white;
+            font-weight: bold;
+            border: 3px solid #f1f1f1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            width: 80%;
+            padding: 20px;
+            text-align: center;
+        }*/
+    </style>
+

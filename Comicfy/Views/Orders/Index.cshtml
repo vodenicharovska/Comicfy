@@ -1,0 +1,57 @@
+﻿@model List<Order>
+
+@{
+    ViewData["Title"] = "Сите нарачки";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4 class="text-dark">Листа на нарачки</h4>
+        </p>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-dark">ID на нарачка</th>
+                    <th class="text-dark">Производи</th>
+                    <th class="text-dark">Вкупно</th>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <th class="text-dark">Корисник</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                <tr>
+                    <td class="align-middle text-dark">@order.Id</td>
+                    <td class="align-middle">
+                        <ul style="list-style-type:none">
+                            @foreach (var item in order.OrderItems)
+                            {
+                                <li>
+                                    <div class="alert alert-info" role="alert">
+                                        <span class="badge bg-success text-light">@item.Amount</span> [@item.Price.ToString("c")]-@item.ComicBook.Title
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </td>
+                    <td class="align-middle text-dark">
+                        @order.OrderItems.Select(m => m.ComicBook.Price * m.Amount).Sum().ToString("c");
+                    </td>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <td class="align-middle text-dark">
+                            @order.User.FullName
+                        </td>
+                    }
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

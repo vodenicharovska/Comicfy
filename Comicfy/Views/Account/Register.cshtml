@@ -1,0 +1,65 @@
+﻿@using Comicfy.Data.ViewModels; 
+@model RegisterVM;
+
+@{ 
+    ViewData["Title"] = "Регистрирај се";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-3">
+
+        @if(TempData["Error"] != null)
+            {
+                <div class="col-md-12 alert alert-danger">
+                    <span><b>Неуспешно!</b> - @TempData["Error"] </span>
+                </div>
+            }
+
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Register">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <img class="col-md-6 offset-3" src="~/lib/photoz/comcicfy_thumbnail.png" width="220" height="140" />
+
+                    <div class="form-group">
+                        <label class="text-dark" asp-for="FullName" class="control-label"></label>
+                        <input id="inputReg" asp-for="FullName" class="form-control" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-dark" asp-for="EmailAddress" class="control-label"></label>
+                        <input id="inputReg" asp-for="EmailAddress" class="form-control" />
+                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-dark" asp-for="Password" class="control-label"></label>
+                        <input id="inputReg" asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-dark" asp-for="ConfirmPassword" class="control-label"></label>
+                        <input id="inputReg" asp-for="ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input id="inputReg" class="btn btn-outline-success float-right" type="submit" value="Регистрирај се" />
+                        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Откажи</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    #inputReg {
+        background-color: lightgray;
+    }
+</style>

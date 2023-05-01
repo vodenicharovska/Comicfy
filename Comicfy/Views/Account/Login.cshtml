@@ -1,0 +1,54 @@
+﻿@using Comicfy.Data.ViewModels;
+@model LoginVM;
+
+@{
+    ViewData["Title"] = "Најави се";
+}
+
+    <div class="row">
+        <div class="col-md-6 offset-3">
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="col-md-12 alert alert-danger">
+                    <span><b>Неуспешно!</b> - @TempData["Error"] </span>
+                </div>
+            }
+
+            <div class="row">
+                <div class="col-md-8 offset-2">
+                    <form asp-action="Login">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <img class="col-md-6 offset-3" src="~/lib/photoz/comcicfy_thumbnail.png" width="220" height="140"/>
+
+
+                        <div class="form-floating">
+                            <label class="text-dark" asp-for="EmailAddress" for="floatingInput">Email адреса</label>
+                            <input id="inputLog" type="email" class="form-control" id="EmailAddress" asp-for="EmailAddress">
+                            <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating">
+                            <label class="text-dark" asp-for="Password" for="floatingInput">Лозинка</label>
+                            <input id="inputLog" type="password" class="form-control" id="Password" asp-for="Password">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <input class="btn btn-outline-success float-right" type="submit" value="Најави се" />
+                            <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Откажи</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <style>
+        #inputLog{
+            background-color: lightgray;
+        }
+    </style>

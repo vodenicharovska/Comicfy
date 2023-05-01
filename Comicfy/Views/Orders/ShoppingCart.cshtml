@@ -1,0 +1,109 @@
+﻿@using Comicfy.Data.ViewModels
+@model ShoppingCartVM
+
+@{
+    ViewData["Title"] = "Кошничка на стрипови";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="text-center">
+            <h2 class="text-dark">Вашата кошничка на стрипови</h2>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr class="text-dark">
+                    <th>Стрип</th>
+                    <th>Цена</th>
+                    <th>Тип</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ShoppingCart.ShoppingCartItems)
+                {
+                    <tr class="text-dark">
+                        <td class="align-middle">@item.ComicBook.Title</td>
+                        <td class="align-middle">@item.ComicBook.Price.ToString("c")</td>
+                        <td class="align-middle">@item.ComicBook.SellingCategory</td>
+                        <td class="align-middle">
+                            <a class="text-danger" asp-controller="Orders" asp-action="RemoveItemFromShoppingCart"
+                               asp-route-id="@item.ComicBook.Id"><i class="bi bi-cart-dash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr class="text-dark">
+                    <td colspan="2"></td>
+                    <td><b>Вкупно:</b></td>
+                    <td>
+                        @Model.ShoppingCartTotal.ToString("c")
+                    </td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="text-right">
+            <div class="btn-group">
+                @*<a class="btn btn-outline-primary" id="paypal-btn" asp-action="CompleteOrder">
+            Потврди нарачка
+                </a>*@
+                <div id="paypal-btn"></div>
+                <span style="padding:5px"></span>
+                <a class="btn btn-outline-success" asp-controller="ComicBooks" asp-action="Index">
+                    Додади уште стрипови
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+    <script>
+        let _total = @Html.Raw(Model.ShoppingCartTotal);
+
+        paypal.Button.render({
+            //Configure environment
+            env: 'sandbox',
+            client: {
+                sandbox: 'AYMw9OtB1YF8cEy-nWYegL5MpALdu8Dq8R_RU5UN5fa3WfLwmX2OsrAA-GKVLR3kdD-HFa2VKmtgVbLm'
+            },
+
+            //Customize button
+            locale: 'en_US',
+            style: {
+                size: 'small',
+                color: 'gold',
+                shape: 'pill'
+            },
+            commit: true,
+
+            //Set up a payment
+            payment: function (data, actions) {
+                return actions.payment.create({
+                    transactions: [{
+                        amount: {
+                            total: _total,
+                            currency: 'USD'
+                        }
+                    }]
+                });
+            },
+
+            //Execute the payment
+            onAuthorize: function (data, actions) {
+                return actions.payment.execute().then(function () {
+                    var url = '@Url.Action("CompleteOrder", "Orders", new { })';
+                    window.location.href = url;
+                });
+            }
+        }, '#paypal-btn')
+    </script>
+}
